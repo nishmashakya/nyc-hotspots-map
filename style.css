@@ -28,10 +28,25 @@ body {
 }
 
 header {
-    background-color: rgba(159, 255, 158, 0.918);
+    /* background-color: rgba(159, 255, 158, 0.918); */
+    background-image: url('nyc.jpg');
+    background-position: center -50px;
     color: black;
     padding: 20px;
+    height: 70vh;
 }
+
+.header {
+    padding: 100px 0; /* Adjust the padding values as needed */
+    text-align: center; /* Horizontally centers the text */
+  }
+  
+
+.header h1 span{
+    padding: 20px;
+    background-color: #ffffffbc;
+}
+  
 
 footer {
     padding: 20px;
@@ -43,11 +58,28 @@ footer {
     /* padding: 20px; */
 }
 
-.content {
+
+.content-1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
+
+.top {
+    height: 28vh;
+    padding: 50px 90px 50px 90px;
+    text-align: center;
+    background-color: white;
+    color: black;
+}
+
+
 
 .left, .right {
     /* background-color: rgb(90, 90, 90); */
@@ -75,6 +107,7 @@ h2 {
     min-height: 20vh;
     /* background-color: #ccc; */
 }
+
 /* 
 .button {
     padding: 15px 25px;
@@ -106,13 +139,13 @@ h2 {
   }
 
   #results_box {
-      height: 45vh;
+      height: 90vh;
       overflow-y: auto;
       border: 1px solid #ccc;
       padding: 10px;
-      margin-top: 10px;
+      margin-top: 0;
       background-color: white;
-      color: black;
+      color: rgb(68, 68, 68);
   }
 
   #results_box output {

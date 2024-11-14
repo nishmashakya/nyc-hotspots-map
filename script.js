@@ -83,6 +83,7 @@ function clearMarkers(map) {
     });
 }
 
+// hotspotName
 async function mainEvent() {
     
 
@@ -97,7 +98,12 @@ async function mainEvent() {
         let currentArray = arrayJSON;
         hotspotName.addEventListener('input', (event) => {
             if (!currentArray.length) { return; }
-            const searchQuery = event.target.value.toLowerCase();
+
+            // console.log(hotspotName.value.toLowerCase());
+
+            // if (event.keyCode === 13) { // enter
+            console.log(hotspotName.value);
+            const searchQuery = hotspotName.value.toLowerCase();
             const filteredHotspots = currentArray
                 .filter((item) => {
                     const providerName = item.provider ? item.provider.toLowerCase() : '';
@@ -109,6 +115,8 @@ async function mainEvent() {
             injectHTML(filteredHotspots);
             clearMarkers(map);
             markerPlace(filteredHotspots, map);
+            // }
+            
         });
 
     }
