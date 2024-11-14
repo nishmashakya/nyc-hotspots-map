@@ -1,0 +1,28 @@
+:root {
+    --color-white: rgb(255, 255, 255);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* these are specific to different browsers */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    background-color: black;
+    color: var(--color-white);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 20px;
+    padding: 0;
+}
