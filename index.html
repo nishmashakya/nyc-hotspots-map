@@ -8,11 +8,8 @@
     <title>NYC WiFi Hotspots</title>
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" href="map.css"/>
-    <script
-      src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-      crossorigin=""
-    ></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 
 <body>
@@ -26,28 +23,48 @@
 
             <div class="left">
 
-                <div class="filters"></div>
+                <div id="filters" class="box">
+                    <h2>FILTERS</h2>
+                    <h3>[ONE] [TWO] [THREE]</h3>
+                </div>
+                
+            </br>
 
-                <div class="map"></div>
+                <div class="box">
+                    <div id="map"></div>
+                </div>
 
             </div>
 
             <div class="right">
 
-                <div class="search">
-                    <form action="/api" class="">
+                <div id="search" class="box">
+                    <h2>SEARCH BY PROVIDER NAME</h2>
+                    <form action="/api" class="form_main">
                         <div class="form_input">
-                            <div id="search_button">
-                                <button type="submit" class="button"></button>
-                            </div>
                             <div id="search_bar">
                                 <input type="text" name="hotspot" id="hotspot"/>
                             </div>
+                            <!-- <div id="search_button">
+                                <button type="submit" class="button"></button>
+                            </div> -->
+                        </div>
+                        <div class="lds-ellipsis">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
                         </div>
                     </form>
                 </div>
+            </br>
 
-                <div class="results"></div>
+                <div id="results" class="box">
+                    <h2>SEARCH RESULTS</h2>
+                    <div id="results_box">
+                        <p>Type in the search bar to see results</p>
+                    </div>
+                </div>
 
             </div>
 
@@ -58,7 +75,14 @@
         </footer>
 
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+    <!-- <script src="map.js"></script> -->
     
 </body>
 
 </html>
+
+
