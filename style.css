@@ -29,24 +29,26 @@ body {
 
 header {
     /* background-color: rgba(159, 255, 158, 0.918); */
-    background-image: url('nyc.jpg');
-    background-position: center -50px;
+    /* background-image: url('nyc.jpg');
+    background-position: center -50px; */
     color: black;
     padding: 20px;
     height: 70vh;
 }
 
 .header {
-    padding: 100px 0; /* Adjust the padding values as needed */
-    text-align: center; /* Horizontally centers the text */
-  }
-  
+    padding: 100px 0;
+    /* Adjust the padding values as needed */
+    text-align: center;
+    /* Horizontally centers the text */
+}
 
-.header h1 span{
+
+.header h1 span {
     padding: 20px;
     background-color: #ffffffbc;
 }
-  
+
 
 footer {
     padding: 20px;
@@ -59,19 +61,15 @@ footer {
 }
 
 
-.content-1 {
-    display: flex;
-    flex-direction: column;
-}
-
-.content-2 {
+.content,
+.landing {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 
-.top {
+.top-right {
     height: 28vh;
     padding: 50px 90px 50px 90px;
     text-align: center;
@@ -81,23 +79,22 @@ footer {
 
 
 
-.left, .right {
+.left,
+.right {
     /* background-color: rgb(90, 90, 90); */
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     width: 50%;
     padding: 25px;
-    flex-grow: 1; 
+    flex-grow: 1;
 }
 
 .box {
     /* background-color: rgb(75, 75, 150); */
 }
 
-h1 {
-
-}
+h1 {}
 
 h2 {
     margin-top: 0;
@@ -133,37 +130,34 @@ h2 {
   } */
 
 
-  #hotspot {
+#hotspot {
     height: 30px;
     width: 60%;
-  }
+}
 
-  #results_box {
-      height: 90vh;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-top: 0;
-      background-color: white;
-      color: rgb(68, 68, 68);
-  }
+#results_box {
+    height: 90vh;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 0;
+    background-color: white;
+    color: rgb(68, 68, 68);
+}
 
-  #results_box output {
+#results_box output {
     border-style: solid;
-  }
+}
 
 #map {
-    display: block;      
-    height: 50vh;     
-    width: 100%;   
-    margin-bottom: 1rem; 
+    display: block;
+    height: 50vh;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 
 
 /* MEDIA QUERY (MOBILE) */
 
-@media only screen and (max-width: 736px){
-
-  
-}
+@media only screen and (max-width: 736px) {}
