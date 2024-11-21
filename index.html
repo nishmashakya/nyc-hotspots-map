@@ -106,19 +106,20 @@
 
           <div id="search" class="box">
             <h2>SEARCH BY PROVIDER NAME</h2>
+            <p><i>Examples: "Transit Wireless", "NYPL", "Spectrum", etc.</i></p>
             
             <form action="/api" class="form_main">
               <div class="form_input">
                 <div id="search_bar">
                   <input type="text" name="hotspot" id="hotspot" />
                 </div>
-<!--                 <div id="search_button">
+                <div id="search_button">
                   <button
                     type="submit"
                     class="button"
                     id="button_search"
-                  ></button>
-                </div> -->
+                  >Search</button>
+                </div>
               </div>
               <div class="lds-ellipsis">
                 <div></div>
@@ -135,14 +136,6 @@
         <div class="middle">
           <div class="box">
             <div id="map"></div>
-            <div class="loading-overlay">
-                <div class="lds-ellipsis">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
           </div>
         </div>
 
@@ -150,7 +143,7 @@
           <div id="results" class="box">
             <h2>SEARCH RESULTS</h2>
             <div id="results_box">
-              <p><i>Type in the search bar to see results</i></p>
+              <p><i>[Type in the search bar to see results]</i></p>
             </div>
           </div>
         </div>

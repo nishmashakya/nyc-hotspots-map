@@ -17,7 +17,7 @@ const dropdownLocation = document.querySelector("#filter-location");
 const clear = document.querySelector("#clear-filters");
 
 
-// Function to filter markers - take in the mpa, the current selected option, and the data array (hotspots), and filter name
+// function to filter markers - take in the mpa, the current selected options, and the data array (hotspots)
 function filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, hotspots) {
     // console.log("Filtering markers for borough: ", selection);
     // let filteredHotspots = hotspots;
@@ -115,7 +115,7 @@ function injectHTML(list) {
     const target = document.querySelector("#results_box");
     target.innerHTML = "";
     list.forEach((item) => {
-        const str = `<div class="output">${item.provider}</br>ZIP: ${item.zip}</div></br>`;
+        const str = `<div class="output"><h3>PROVIDER: ${item.provider}</h3>ZIP: ${item.zip}</div></br>`;
         target.innerHTML += str;
     });
 }
@@ -143,17 +143,12 @@ async function mainEvent() {
         // filter
         let currentArray = arrayJSON;
 
-        // event listener for search bar
-        hotspotName.addEventListener("input", (event) => {
-            if (!currentArray.length) {
-                return;
-            }
+        injectHTML(currentArray);
 
-            // console.log(hotspotName.value.toLowerCase());
-
-            // if (event.keyCode === 13) { // enter
-            console.log(hotspotName.value);
-            const searchQuery = hotspotName.value.toLowerCase();
+        // event listener for search bar... using submit button
+        submit.addEventListener("click", (event) => {
+            event.preventDefault();
+            const searchQuery = hotspotName.value.toLowerCase();   
             const filteredHotspots = currentArray
                 .filter((item) => {
                     const providerName = item.provider ? item.provider.toLowerCase() : "";
@@ -165,7 +160,6 @@ async function mainEvent() {
             injectHTML(filteredHotspots);
             clearMarkers(map);
             markerPlace(filteredHotspots, map);
-            // }
         });
 
 
