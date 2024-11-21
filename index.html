@@ -1,106 +1,170 @@
 <!DOCTYPE html>
 
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NYC WiFi Hotspots</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-</head>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-
-        <header>
+      
+      <div class="landing">
+        
+        <div class="top-left">
+          <header>
             <div class="header">
-                <h1><span>NYC WiFi Hotspot Locator</span></h1>
+              <h1><span>NYC WiFi Hotspot Locator</span></h1>
             </div>
-        </header>
-
-        <div class="content-1">
-
-            <div class="top">
-
-                <p>The WiFi Hotspot Locator shows you all of the public hotspots around NYC so that you don't have to
-                    worry the next time you run out of data or you need a quick connection!</p>
-                </br>
-                <p><i>Data provided by the Office of Technology and Innovation (OTI)</i></p>
-
-            </div>
-
-            <div class="content-2">
-
-                <div class="left">
-
-                    <div id="filters" class="box">
-                        <h2>FILTERS</h2>
-                        <h3>[ONE] [TWO] [THREE]</h3>
-                    </div>
-
-                    </br>
-
-                    <div id="search" class="box">
-                        <h2>SEARCH BY PROVIDER NAME</h2>
-                        <form action="/api" class="form_main">
-                            <div class="form_input">
-                                <div id="search_bar">
-                                    <input type="text" name="hotspot" id="hotspot" />
-                                </div>
-                                <div id="search_button">
-                                    <button type="submit" class="button" id="button_search"></button>
-                                </div>
-                            </div>
-                            <div class="lds-ellipsis">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </form>
-                    </div>
-
-                    </br>
-
-                    <div class="box">
-                        <div id="map"></div>
-                    </div>
-
-                </div>
-
-
-
-                <div class="right">
-
-                    <div id="results" class="box">
-                        <h2>SEARCH RESULTS</h2>
-                        <div id="results_box">
-                            <p><i>Type in the search bar to see results</i></p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-
-
+          </header>
         </div>
 
-        <footer>
-            <p>footer</p>
-        </footer>
+        <div class="top-right">
+          <div>
+            <p>
+              The WiFi Hotspot Locator shows you all of the public hotspots around
+              NYC so that you don't have to worry the next time you run out of
+              data or you need a quick connection!
+            </p>
+            <br />
+            <p><i>Data provided by the Office of Technology and Innovation (OTI)</i></p>
+          </div>
+          
+          <div class="buttons">
+            <!--                 button for dataset and button for map  -->
+            <div><a href="https://data.cityofnewyork.us/City-Government/NYC-Wi-Fi-Hotspot-Locations/yjub-udmw/about_data">
+              <button id="button-to-data">View Dataset</button>
+            </a></div>
 
+            <div><button id="button-to-bottom">Go to the Map</button></div>
+          </div>
+        </div>
+        
+      </div>
+
+      
+      
+      <div class="content">
+        
+        <div class="left">
+          <div class="filters" class="box">
+            <h2>FILTERS</h2>
+            
+            <div class="filters-row">
+            
+              <div class="dropdown">
+                <label for="filter-borough">Select Borough</label>
+                <br />
+                <select id="filter-borough">
+                  <option value="" selected disabled></option>
+                  <option value="queens">Queens</option>
+                  <option value="brooklyn">Brooklyn</option>
+                  <option value="manhattan">Manhattan</option>
+                  <option value="bronx">Bronx</option>
+                  <option value="statenisland">Staten Island</option>
+                </select>
+              </div>
+
+              <div class="dropdown">
+                <label for="filter-access">Access Type</label>
+                <br />
+                <select id="filter-access">
+                  <option value="" selected disabled></option>
+                  <option value="free">Free</option>
+                  <option value="limitedfree">Limited Free</option>
+                </select>
+              </div>
+
+              <div class="dropdown">
+                <label for="filter-location">Location Type</label>
+                <br />
+                <select id="filter-location">
+                  <option value="" selected disabled></option>
+                  <option value="library">Library</option>
+                  <option value="subway">Subway</option>
+                  <option value="indoor">Indoor</option>
+                  <option value="outdoor">Outdoor</option>
+                  <option value="kiosk">Kiosk</option>
+                </select>
+              </div>
+          
+            </div>
+            <div>
+                <button id="clear-filters">Clear Filters</button>
+              </div>
+            
+            
+          </div>
+
+          <div id="search" class="box">
+            <h2>SEARCH BY PROVIDER NAME</h2>
+            
+            <form action="/api" class="form_main">
+              <div class="form_input">
+                <div id="search_bar">
+                  <input type="text" name="hotspot" id="hotspot" />
+                </div>
+<!--                 <div id="search_button">
+                  <button
+                    type="submit"
+                    class="button"
+                    id="button_search"
+                  ></button>
+                </div> -->
+              </div>
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </form>
+          </div>
+
+          
+        </div>
+        
+        <div class="middle">
+          <div class="box">
+            <div id="map"></div>
+            <div class="loading-overlay">
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="right">
+          <div id="results" class="box">
+            <h2>SEARCH RESULTS</h2>
+            <div id="results_box">
+              <p><i>Type in the search bar to see results</i></p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <footer></footer>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
     <script src="script.js"></script>
-
-</body>
-
+  </body>
 </html>

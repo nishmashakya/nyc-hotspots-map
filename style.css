@@ -28,19 +28,18 @@ body {
 }
 
 header {
-    /* background-color: rgba(159, 255, 158, 0.918); */
-    /* background-image: url('nyc.jpg');
-    background-position: center -50px; */
     color: black;
     padding: 20px;
     height: 70vh;
 }
 
 .header {
-    padding: 100px 0;
-    /* Adjust the padding values as needed */
+    padding: 50px;
     text-align: center;
-    /* Horizontally centers the text */
+    position: relative;
+    top: 70%;
+    transform: translateY(-50%);
+    /* horizontally center the text */
 }
 
 
@@ -57,29 +56,68 @@ footer {
 .wrapper {
     display: flex;
     flex-direction: column;
-    /* padding: 20px; */
 }
 
 
-.content,
 .landing {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    height: 100%;
 }
 
 
+.top-left, .top-right {
+  width: 50%;
+  height: 100vh;
+}
+
+
+.top-left {
+  background-color: rgba(159, 255, 158, 0.918);
+  background-image: url('nyc.jpg');
+  background-position: center -50px;
+}
+
 .top-right {
-    height: 28vh;
     padding: 50px 90px 50px 90px;
     text-align: center;
     background-color: white;
     color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#button-to-bottom, #button-to-data {
+  padding: 30px;
+  width: 30em;
+  margin-bottom: 100px;
 }
 
 
+.content {
+  display: flex;
+  flex-direction: column;
+}
 
-.left,
+
+.left {
+  display: flex;
+  padding: 25px;
+  justify-content: space-between;
+}
+
+.middle {
+  margin: 0px 20px 0px 20px;
+}
+
 .right {
     /* background-color: rgb(90, 90, 90); */
     display: flex;
@@ -90,49 +128,35 @@ footer {
     flex-grow: 1;
 }
 
-.box {
-    /* background-color: rgb(75, 75, 150); */
-}
-
-h1 {}
 
 h2 {
     margin-top: 0;
 }
 
-.box {
-    min-height: 20vh;
-    /* background-color: #ccc; */
+
+.filters {
+    display: flex;
+    flex-direction: column;
 }
 
-/* 
-.button {
-    padding: 15px 25px;
-    font-size: 24px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #000000;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 2px 2px #999999;
-  }
-  
-  .button:hover {
-    background-color: var(--color-white);
-  }
-  
-  .button:active {
-    background-color: var(--color-white);
-    color: black;
-    box-shadow: 0 5px #666666;
-  } */
+.filters-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown {
+  margin: 0px 20px 0px 20px;
+}
+
+
+#clear-filters {
+    margin: 20px 20px 0px 20px;
+}
 
 
 #hotspot {
     height: 30px;
-    width: 60%;
+    width: 100%;
 }
 
 #results_box {
@@ -151,7 +175,7 @@ h2 {
 
 #map {
     display: block;
-    height: 50vh;
+    height: 75vh;
     width: 100%;
     margin-bottom: 1rem;
 }
