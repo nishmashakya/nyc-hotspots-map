@@ -89,13 +89,13 @@ function markerPlace(hotspots, map) {
 
     // foreach loop -- add marker for each location
     hotspots.forEach((spot) => {
-        // console.log("hey");
+        // console.log("hi");
         if (spot.location_lat_long) {
             const [lon, lat] = [
                 spot.location_lat_long.longitude,
                 spot.location_lat_long.latitude,
             ];
-            // console.log(`Hotspot coords: ${spot.ssid}, Lat: ${lat}, Lon: ${lon}`);
+            // console.log(`htspot coords: ${spot.ssid}, Lat: ${lat}, Lon: ${lon}`);
             const marker = L.marker([lat, lon]).addTo(map); //.bindPopup(`<b>${spot.ssid}`);
 
             // add an event listener (if click marker, show modal)
@@ -157,10 +157,7 @@ function showModal(hotspotData) {
 
     modal.style.display = "block";
     document.body.classList.add("modal-open"); // no scrolling
-    
-    // GSAP Animation
-    // gsap.fromTo(modal, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5 });
-    
+        
     // get button to close modal
     const closeModalButton = document.getElementById("close-modal");
     // event lstneer on close buton... both modal and overlay
@@ -262,14 +259,65 @@ async function mainEvent() {
             clearMarkers(map);
             markerPlace(currentArray, map); // show all
             injectHTML(currentArray);
+            attachOutputListeners(currentArray);
         });
 
-
-        
-
-      
+        // event listenre for outputs (like the map mparkers)
+        attachOutputListeners(currentArray);
 
     }
+}
+
+// function to loop through all the output boxes (under map) and addevent listerners for modal
+function attachOutputListeners(list) {
+    const outputs = document.querySelectorAll(".output");  // all with class ouptut
+    outputs.forEach((outputItem, index) => {
+        outputItem.addEventListener("click", () => {
+            const hotspotData = list[index];
+            console.log("hotspot:", hotspotData);
+            showModal(hotspotData);
+        });
+
+        // GSAP ANIMATIONS FOR BUTTONS
+
+        // animation when hover into box
+        outputItem.addEventListener("mouseenter", () => {
+            gsap.to(outputItem, {
+                scale: 1.05,
+                boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+                duration: 0.2,
+                ease: "power1.out"
+            });
+        });
+
+        // animation hoverign out of box
+        outputItem.addEventListener("mouseleave", () => {
+            gsap.to(outputItem, {
+                scale: 1,
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                duration: 0.2,
+                ease: "power1.in"
+            });
+        });
+
+        // animation click box
+        outputItem.addEventListener("mousedown", () => {
+            gsap.to(outputItem, {
+                scale: 0.95,
+                duration: 0.1,
+                ease: "power1.in"
+            });
+        });
+
+        // orginal state animation after clicking
+        outputItem.addEventListener("mouseup", () => {
+            gsap.to(outputItem, {
+                scale: 1.05,
+                duration: 0.1,
+                ease: "power1.out"
+            });
+        });
+    });
 }
 
 document.addEventListener("DOMContentLoaded", async () => mainEvent());
