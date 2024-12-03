@@ -96,7 +96,13 @@ function markerPlace(hotspots, map) {
                 spot.location_lat_long.latitude,
             ];
             // console.log(`Hotspot coords: ${spot.ssid}, Lat: ${lat}, Lon: ${lon}`);
-            L.marker([lat, lon]).addTo(map).bindPopup(`<b>${spot.ssid}`);
+            const marker = L.marker([lat, lon]).addTo(map); //.bindPopup(`<b>${spot.ssid}`);
+
+            // add an event listener (if click marker, show modal)
+            marker.addEventListener("click", (event) => {
+                console.log("showing modal");
+                showModal(spot);
+            });
         }
     });
 }
@@ -119,6 +125,63 @@ function injectHTML(list) {
         target.innerHTML += str;
     });
 }
+
+// FOR THE POP UP BOX
+function showModal(hotspotData) {
+    console.log("Modal info for... ", hotspotData.name);
+    const modal = document.querySelector("#modal");
+    const overlay = document.querySelector("#overlay");
+    // get the ids and set content based on data.... json
+    document.querySelector("#modal-title").innerHTML = `<strong>Hotspot Name:</strong> ${hotspotData.name}`;
+    document.querySelector("#modal-borough").innerHTML = `<strong>Borough:</strong> ${hotspotData.boroname}`;
+    document.querySelector("#modal-location").innerHTML = `<strong>Location:</strong> ${hotspotData.location}`;
+    document.querySelector("#modal-zip").innerHTML = `<strong>Zip:</strong> ${hotspotData.zip}`;
+    document.querySelector("#modal-access").innerHTML = `<strong>Access Type:</strong> ${hotspotData.type}`;
+    document.querySelector("#modal-provider").innerHTML = `<strong>Provider:</strong> ${hotspotData.provider}`;
+    document.querySelector("#modal-note").innerHTML = `<strong>Note:</strong> ${hotspotData.remarks || "N/A"}`;
+  
+    // both modal and overlay!
+    
+    overlay.style.display = "block";
+
+    // animate popup -- GSAP
+    gsap.fromTo(modal, {
+        opacity: 0,
+        scale: 0.8,
+    }, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: "power2.out"
+    });
+
+    modal.style.display = "block";
+    document.body.classList.add("modal-open"); // no scrolling
+    
+    // GSAP Animation
+    // gsap.fromTo(modal, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.5 });
+    
+    // get button to close modal
+    const closeModalButton = document.getElementById("close-modal");
+    // event lstneer on close buton... both modal and overlay
+    closeModalButton.addEventListener("click", () => {
+        // animate closing popup modal -- GSAP
+        gsap.to(modal, {
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.5,
+            ease: "power2.in",
+            onComplete: () => {
+                // after naimation, hide model and overaly
+                modal.style.display = "none";
+                overlay.style.display = "none";
+                document.body.classList.remove("modal-open"); // lets it scrolll again
+            }
+        });
+    });
+  }
+
+
 
 // for updating/flktering
 function clearMarkers(map) {
@@ -199,7 +262,12 @@ async function mainEvent() {
             clearMarkers(map);
             markerPlace(currentArray, map); // show all
             injectHTML(currentArray);
-        })
+        });
+
+
+        
+
+      
 
     }
 }

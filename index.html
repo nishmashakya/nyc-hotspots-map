@@ -142,11 +142,48 @@
         <div class="right">
           <div id="results" class="box">
             <h2>SEARCH RESULTS</h2>
-            <div id="results_box">
-              <p><i>[Type in the search bar to see results]</i></p>
+            <div id="results_box"></div>
+          </div>
+        </div>
+
+
+        <!-- overlay for when modal is open -->
+        <div id="overlay" class="hidden"></div>
+
+
+        <!-- MODAL -->
+        <div id="modal" class="hidden">
+          <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h3 id="modal-title"></h3>
+            <div id="modal-divide">
+              <div id="modal-left">
+                <img src="nypl.jpg">
+              </div>
+              <div id="modal-right">
+                <p id="modal-borough"></p>
+                <p id="modal-location"></p>
+                <p id="modal-zip"></p>
+                <p id="modal-access"></p>
+                <p id="modal-provider"></p>
+                <p id="modal-note"></p>
+              </div>
             </div>
           </div>
         </div>
+
+
+<!-- 
+        <div id="test-modal" class="hidden">
+          <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h3>Test Modal</h3>
+            <p>This is a simple modal popup for testing purposes!</p>
+          </div>
+        </div>
+        
+        <button id="open-modal">Open Modal</button> -->
+        
         
       </div>
 
@@ -158,6 +195,7 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
