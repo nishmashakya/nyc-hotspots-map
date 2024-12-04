@@ -127,6 +127,7 @@ async function loadHotspotData(url) {
     // markerPlace(hotspots, map); //  put markers on map
     // return hotspots;
     try {
+        map = initMap();
         // Instead of fetch, use the promisified function promiseData
         const hotspots = await promiseData(url);
         markerPlace(hotspots, map); // put markers on map
@@ -230,10 +231,66 @@ function getMarkerColor(borough) {
 }
 
 
+// function for gsap animations to BUTTONS (like hovering ,clicking, etc.)
+function animateButton(button) {
+    // animation when hover into box
+    button.addEventListener("mouseenter", () => {
+        gsap.to(button, {
+            scale: 1.05,
+            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+            duration: 0.2,
+            ease: "power1.out",
+        });
+    });
+
+    // animation hoverign out of box
+    button.addEventListener("mouseleave", () => {
+        gsap.to(button, {
+            scale: 1,
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            duration: 0.2,
+            ease: "power1.in",
+        });
+    });
+
+    // animation click box
+    button.addEventListener("mousedown", () => {
+        gsap.to(button, {
+            scale: 0.95,
+            duration: 0.1,
+            ease: "power1.in",
+        });
+    });
+
+    // orginal state animation after clicking
+    button.addEventListener("mouseup", () => {
+        gsap.to(button, {
+            scale: 1.05,
+            duration: 0.1,
+            ease: "power1.out",
+        });
+    });
+}
+
+// function to loop through all the output boxes (under map) and addevent listerners for modal
+function attachOutputListeners(list) {
+    const outputs = document.querySelectorAll(".output");  // all with class ouptut
+    outputs.forEach((outputItem, index) => {
+        outputItem.addEventListener("click", () => {
+            const hotspotData = list[index];
+            console.log("hotspot:", hotspotData);
+            showModal(hotspotData);
+        });
+
+        // CALL FUNCTION TO GSAP ANIMATIONS FOR BUTTONS
+        animateButton(outputItem)
+
+    });
+}
 
 // main func
 async function mainEvent() {
-    map = initMap();
+    // map = initMap();
 
     const arrayJSON = await loadHotspotData(apiUrlMap);
 
@@ -341,61 +398,5 @@ async function mainEvent() {
 }
 
 
-// function for gsap animations to BUTTONS (like hovering ,clicking, etc.)
-function animateButton(button) {
-    // animation when hover into box
-    button.addEventListener("mouseenter", () => {
-        gsap.to(button, {
-            scale: 1.05,
-            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-            duration: 0.2,
-            ease: "power1.out",
-        });
-    });
-
-    // animation hoverign out of box
-    button.addEventListener("mouseleave", () => {
-        gsap.to(button, {
-            scale: 1,
-            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-            duration: 0.2,
-            ease: "power1.in",
-        });
-    });
-
-    // animation click box
-    button.addEventListener("mousedown", () => {
-        gsap.to(button, {
-            scale: 0.95,
-            duration: 0.1,
-            ease: "power1.in",
-        });
-    });
-
-    // orginal state animation after clicking
-    button.addEventListener("mouseup", () => {
-        gsap.to(button, {
-            scale: 1.05,
-            duration: 0.1,
-            ease: "power1.out",
-        });
-    });
-}
-
-// function to loop through all the output boxes (under map) and addevent listerners for modal
-function attachOutputListeners(list) {
-    const outputs = document.querySelectorAll(".output");  // all with class ouptut
-    outputs.forEach((outputItem, index) => {
-        outputItem.addEventListener("click", () => {
-            const hotspotData = list[index];
-            console.log("hotspot:", hotspotData);
-            showModal(hotspotData);
-        });
-
-        // CALL FUNCTION TO GSAP ANIMATIONS FOR BUTTONS
-        animateButton(outputItem)
-
-    });
-}
 
 document.addEventListener("DOMContentLoaded", async () => mainEvent());
