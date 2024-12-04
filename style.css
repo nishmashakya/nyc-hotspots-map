@@ -1,5 +1,7 @@
 :root {
     --color-white: rgb(255, 255, 255);
+    --color-black: rgb(0,0,0);
+    --color-red: rgb(214, 0, 0);
 }
 
 * {
@@ -20,15 +22,15 @@ html {
 }
 
 body {
-    background-color: black;
-    color: var(--color-white);
+    /* background-color: var(--color-black); */
+    /* color: var(--color-white); */
     font-family: 'Segoe UI', sans-serif;
     margin: 0;
     padding: 0;
 }
 
 header {
-    color: black;
+    color: var(--color-black);
     padding: 20px;
     height: 70vh;
 }
@@ -50,7 +52,7 @@ header {
 
 
 footer {
-    padding: 20px;
+    padding: 5px;
 }
 
 .wrapper {
@@ -81,8 +83,9 @@ footer {
 .top-right {
     padding: 100px 90px 50px 90px;
     text-align: center;
-    background-color: white;
-    color: black;
+    background-color: var(--color-white);
+    /* background-color: #fde5c3; */
+    color: var(--color-black);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -92,18 +95,22 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 40px;
+  margin: 50px 0;
 }
 
-#button-to-bottom, #button-to-data {
+/* #button-to-bottom, #button-to-data {
   padding: 30px;
   width: 30em;
   margin-bottom: 100px;
-}
+} */
 
 
 .content {
   display: flex;
   flex-direction: column;
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 
@@ -113,17 +120,21 @@ footer {
   justify-content: space-between;
 }
 
+.left .filters, .left #search {
+  width: 50%;
+}
+
 .middle {
   margin: 0px 20px 0px 20px;
 }
 
 .right {
-    /* background-color: rgb(90, 90, 90); */
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     width: 100%;
     padding: 25px;
+    padding-bottom: 0;
     flex-grow: 1;
 }
 
@@ -140,39 +151,47 @@ h2 {
 
 .filters-row {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
+  /* justify-content: space-between; */
 }
 
-.dropdown {
-  margin: 0px 20px 0px 20px;
+#filter-borough, #filter-access, #filter-location{
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* the buttons to clear filters and clear search */
+#clear-filters, #clear-search {
+  height: 30px;
 }
 
 
-#clear-filters {
-    margin: 20px 20px 0px 20px;
+.form_input {
+  display: flex;
+  gap: 10px;
+  width: 100%;
 }
 
-
+/* the search bar */
 #hotspot {
     height: 30px;
     width: 100%;
 }
 
-
+/* the search button */
 #button_search {
     height: 2em;
-    width: 8em;
-    margin-top: 20px;
+    width: 100%;
 }
 
 #results_box {
     height: 90vh;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 5px;
     margin-top: 0;
-    /* background-color: white; */
-    color: rgb(0, 0, 0);
+    color: var(--color-black);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -180,7 +199,7 @@ h2 {
 
 
 .output {
-    background-color: white;
+    background-color: var(--color-white);;
     width: 25%;
     padding: 5px 20px 20px 20px;
     margin: 30px;
@@ -191,17 +210,20 @@ h2 {
 }
 
 
-.output:hover {
-    background-color: #eaeaea;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); */
-    /* transform: translateY(-2px); */
+#button-to-data, #button-to-bottom {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 50px;
+  margin: 10px;
+  cursor: pointer;
 }
 
-/* .output:active {
-    background-color: #dcdcdc;
-    transform: scale(0.98);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-} */
+.output:hover, #button-to-data:hover, #button-to-bottom:hover {
+    background-color: #eaeaea;
+}
 
 
 
@@ -218,17 +240,36 @@ h2 {
 
 /* STYLING FOR MODAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
+  /* close modal button */
+  .close-btn  {
+    position: absolute;
+    top: 10px; 
+    right: 10px;
+    font-size: 30px; 
+    font-weight: bold;
+    color: var(--color-black); 
+    cursor: pointer; 
+    padding: 5px 15px; 
+    text-align: center;
+  }
+  
+  /* hovering button */
+  .close-btn:hover {
+    background-color: var(--color-red);
+    color: var(--color-white);
+  }
+
   #modal {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
+    background: var(--color-white);
+    padding: 20px 50px 20px 50px;
     width: 90%;
     height: 80%;
     display: none;
-    color: black;
+    color: var(--color-black);
     z-index: 1000; /*bc otherwise the map will be on top of the modal :( */
   }
 
@@ -265,15 +306,8 @@ h2 {
     display: none;
   }
 
-  /* close modal button */
-  #modal .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 24px;
-    color: red;
-  }
+
+
 
   /* and the overlay too */
   #overlay {
@@ -294,4 +328,6 @@ h2 {
 
 /* MEDIA QUERY (MOBILE) */
 
-@media only screen and (max-width: 736px) {}
+@media only screen and (max-width: 736px) {
+  
+}

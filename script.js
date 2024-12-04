@@ -8,13 +8,18 @@ const submit = document.querySelector('button[type="submit"]');
 const loadAnimation = document.querySelector(".lds-ellipsis");
 const hotspotName = document.querySelector("#hotspot");
 const mapContent = document.querySelector(".content");
-const btnScroll = document.querySelector("#button-to-bottom");
 
 const dropdownBorough = document.querySelector("#filter-borough");
 const dropdownAccess = document.querySelector("#filter-access");
 const dropdownLocation = document.querySelector("#filter-location");
 
-const clear = document.querySelector("#clear-filters");
+const clearFilters = document.querySelector("#clear-filters");
+const clearSearch = document.querySelector("#clear-search");
+
+
+
+const viewDatasetButton = document.querySelector("#button-to-data");
+const viewMapButton = document.querySelector("#button-to-bottom");
 
 
 // function to filter markers - take in the mpa, the current selected options, and the data array (hotspots)
@@ -48,14 +53,7 @@ function filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, h
     markerPlace(filteredHotspots, map);
 }
 
-btnScroll.addEventListener("click", (event) => {
-    mapContent.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-        inline: "nearest",
-    });
-});
-
+// promisidfied async
 async function promiseData(url) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -68,6 +66,7 @@ async function promiseData(url) {
     });
 }
 
+// initialize map
 function initMap() {
     const map = L.map("map").setView([40.73, -73.9], 12); // center
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -124,6 +123,9 @@ function injectHTML(list) {
         const str = `<div class="output"><h3>PROVIDER: ${item.provider}</h3>ZIP: ${item.zip}</div></br>`;
         target.innerHTML += str;
     });
+
+    // add listeners
+    attachOutputListeners(list);
 }
 
 // FOR THE POP UP BOX
@@ -132,13 +134,13 @@ function showModal(hotspotData) {
     const modal = document.querySelector("#modal");
     const overlay = document.querySelector("#overlay");
     // get the ids and set content based on data.... json
-    document.querySelector("#modal-title").innerHTML = `<strong>Hotspot Name:</strong> ${hotspotData.name}`;
+    document.querySelector("#modal-title").innerHTML = `<strong>Hotspot Name:</strong> ${hotspotData.name || "N/A"}`; // some are empty for some reason?
     document.querySelector("#modal-borough").innerHTML = `<strong>Borough:</strong> ${hotspotData.boroname}`;
     document.querySelector("#modal-location").innerHTML = `<strong>Location:</strong> ${hotspotData.location}`;
     document.querySelector("#modal-zip").innerHTML = `<strong>Zip:</strong> ${hotspotData.zip}`;
     document.querySelector("#modal-access").innerHTML = `<strong>Access Type:</strong> ${hotspotData.type}`;
     document.querySelector("#modal-provider").innerHTML = `<strong>Provider:</strong> ${hotspotData.provider}`;
-    document.querySelector("#modal-note").innerHTML = `<strong>Note:</strong> ${hotspotData.remarks || "N/A"}`;
+    document.querySelector("#modal-note").innerHTML = `<strong>Note:</strong> ${hotspotData.remarks || "N/A"}`; // some are empty so N/A
   
     // both modal and overlay!
     
@@ -159,7 +161,7 @@ function showModal(hotspotData) {
     document.body.classList.add("modal-open"); // no scrolling
         
     // get button to close modal
-    const closeModalButton = document.getElementById("close-modal");
+    const closeModalButton = document.querySelector("#close-modal");
     // event lstneer on close buton... both modal and overlay
     closeModalButton.addEventListener("click", () => {
         // animate closing popup modal -- GSAP
@@ -177,7 +179,6 @@ function showModal(hotspotData) {
         });
     });
   }
-
 
 
 // for updating/flktering
@@ -205,7 +206,20 @@ async function mainEvent() {
 
         injectHTML(currentArray);
 
-        // event listener for search bar... using submit button
+        // event listner for button that scrolls to map
+        viewMapButton.addEventListener("click", (event) => {
+            mapContent.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest",
+            });
+        });
+
+        animateButton(viewMapButton);
+        animateButton(viewDatasetButton);
+
+
+        // event listener for search bar... using search button
         submit.addEventListener("click", (event) => {
             event.preventDefault();
             const searchQuery = hotspotName.value.toLowerCase();   
@@ -245,8 +259,9 @@ async function mainEvent() {
         });
         
 
-        // clear button resetse
-        clear.addEventListener("click", () => {
+        // eveent listener for clear button resetse
+        clearFilters.addEventListener("click", (event) => {
+            event.preventDefault();
             // rest filters values to default 
             dropdownBorough.value = "";
             dropdownAccess.value = "";
@@ -262,10 +277,63 @@ async function mainEvent() {
             attachOutputListeners(currentArray);
         });
 
+        // event listener for clear search
+        clearSearch.addEventListener("click", (event) => {
+            event.preventDefault();
+            hotspotName.value = ""; // clear search input
+            clearMarkers(map);
+            markerPlace(currentArray, map); // show all
+            injectHTML(currentArray);
+            attachOutputListeners(currentArray);
+        });
+
+
         // event listenre for outputs (like the map mparkers)
         attachOutputListeners(currentArray);
 
     }
+}
+
+
+// function for gsap animations to BUTTONS (like hovering ,clicking, etc.)
+function animateButton(button) {
+    // animation when hover into box
+    button.addEventListener("mouseenter", () => {
+        gsap.to(button, {
+            scale: 1.05,
+            boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+            duration: 0.2,
+            ease: "power1.out",
+        });
+    });
+
+    // animation hoverign out of box
+    button.addEventListener("mouseleave", () => {
+        gsap.to(button, {
+            scale: 1,
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+            duration: 0.2,
+            ease: "power1.in",
+        });
+    });
+
+    // animation click box
+    button.addEventListener("mousedown", () => {
+        gsap.to(button, {
+            scale: 0.95,
+            duration: 0.1,
+            ease: "power1.in",
+        });
+    });
+
+    // orginal state animation after clicking
+    button.addEventListener("mouseup", () => {
+        gsap.to(button, {
+            scale: 1.05,
+            duration: 0.1,
+            ease: "power1.out",
+        });
+    });
 }
 
 // function to loop through all the output boxes (under map) and addevent listerners for modal
@@ -278,45 +346,9 @@ function attachOutputListeners(list) {
             showModal(hotspotData);
         });
 
-        // GSAP ANIMATIONS FOR BUTTONS
+        // CALL FUNCTION TO GSAP ANIMATIONS FOR BUTTONS
+        animateButton(outputItem)
 
-        // animation when hover into box
-        outputItem.addEventListener("mouseenter", () => {
-            gsap.to(outputItem, {
-                scale: 1.05,
-                boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-                duration: 0.2,
-                ease: "power1.out"
-            });
-        });
-
-        // animation hoverign out of box
-        outputItem.addEventListener("mouseleave", () => {
-            gsap.to(outputItem, {
-                scale: 1,
-                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                duration: 0.2,
-                ease: "power1.in"
-            });
-        });
-
-        // animation click box
-        outputItem.addEventListener("mousedown", () => {
-            gsap.to(outputItem, {
-                scale: 0.95,
-                duration: 0.1,
-                ease: "power1.in"
-            });
-        });
-
-        // orginal state animation after clicking
-        outputItem.addEventListener("mouseup", () => {
-            gsap.to(outputItem, {
-                scale: 1.05,
-                duration: 0.1,
-                ease: "power1.out"
-            });
-        });
     });
 }
 

@@ -22,7 +22,7 @@
         <div class="top-left">
           <header>
             <div class="header">
-              <h1><span>NYC WiFi Hotspot Locator</span></h1>
+              <h1><span>NYC Hotspot Locator</span></h1>
             </div>
           </header>
         </div>
@@ -30,9 +30,8 @@
         <div class="top-right">
           <div>
             <p>
-              The WiFi Hotspot Locator shows you all of the public hotspots around
-              NYC so that you don't have to worry the next time you run out of
-              data or you need a quick connection!
+              This WiFi Hotspot Locator tool shows you all of the public hotspots around
+              NYC so that you don't have to worry the next time you need a quick connection!
             </p>
             <br />
             <p><i>Data provided by the Office of Technology and Innovation (OTI)</i></p>
@@ -55,13 +54,13 @@
       <div class="content">
         
         <div class="left">
-          <div class="filters" class="box">
+          <div class="filters">
             <h2>FILTERS</h2>
             
             <div class="filters-row">
             
               <div class="dropdown">
-                <label for="filter-borough">Select Borough</label>
+                <label for="filter-borough">Borough</label>
                 <br />
                 <select id="filter-borough">
                   <option value="" selected disabled></option>
@@ -104,23 +103,24 @@
             
           </div>
 
-          <div id="search" class="box">
+          <div id="search">
             <h2>SEARCH BY PROVIDER NAME</h2>
-            <p><i>Examples: "Transit Wireless", "NYPL", "Spectrum", etc.</i></p>
+            
             
             <form action="/api" class="form_main">
               <div class="form_input">
                 <div id="search_bar">
-                  <input type="text" name="hotspot" id="hotspot" />
+                  <input type="text" name="hotspot" id="hotspot" value=""/>
                 </div>
                 <div id="search_button">
                   <button
                     type="submit"
                     class="button"
-                    id="button_search"
-                  >Search</button>
+                    id="button_search">Search</button>
                 </div>
               </div>
+              <p><i>Examples: "Transit Wireless", "NYPL", "Spectrum", etc.</i></p>
+              <div><button id="clear-search">Clear Search</button></div>
               <div class="lds-ellipsis">
                 <div></div>
                 <div></div>
@@ -134,14 +134,14 @@
         </div>
         
         <div class="middle">
-          <div class="box">
+          <div>
             <div id="map"></div>
           </div>
         </div>
 
         <div class="right">
-          <div id="results" class="box">
-            <h2>HOTSPOTS ON MAP</h2>
+          <div id="results">
+            <h2>HOTSPOTS LIST</h2>
             <div id="results_box">
               <!-- each one will go in here... class="output" -->
             </div>
@@ -174,17 +174,6 @@
           </div>
         </div>
 
-
-<!-- 
-        <div id="test-modal" class="hidden">
-          <div class="modal-content">
-            <span id="close-modal" class="close-btn">&times;</span>
-            <h3>Test Modal</h3>
-            <p>This is a simple modal popup for testing purposes!</p>
-          </div>
-        </div>
-        
-        <button id="open-modal">Open Modal</button> -->
         
         
       </div>
