@@ -97,14 +97,14 @@ function markerPlace(hotspots, map) {
 
             // get boroughs and then call function to get corresponding color
             const borough = spot.boroname || ""; // empty ig no boroname
-            const color = getMarkerColor(borough); 
+            const color = getMarkerColor(borough);
 
             // markers... make with color
             const circleMarker = L.circleMarker([lat, lon], {
-                color: color,       
-                radius: 8,           
-                weight: 3,          
-                fillOpacity: 0.7    
+                color: color,
+                radius: 8,
+                weight: 3,
+                fillOpacity: 0.7
             }).addTo(map);
 
             // console.log(`htspot coords: ${spot.ssid}, Lat: ${lat}, Lon: ${lon}`);
@@ -128,7 +128,7 @@ async function loadHotspotData(url) {
     // return hotspots;
     try {
         // Instead of fetch, use the promisified function promiseData
-        const hotspots = await promiseData(url); 
+        const hotspots = await promiseData(url);
         markerPlace(hotspots, map); // put markers on map
         return hotspots;
     } catch (err) {
@@ -161,9 +161,9 @@ function showModal(hotspotData) {
     document.querySelector("#modal-access").innerHTML = `<strong>Access Type:</strong> ${hotspotData.type}`;
     document.querySelector("#modal-provider").innerHTML = `<strong>Provider:</strong> ${hotspotData.provider}`;
     document.querySelector("#modal-note").innerHTML = `<strong>Note:</strong> ${hotspotData.remarks || "N/A"}`; // some are empty so N/A
-  
+
     // both modal and overlay!
-    
+
     overlay.style.display = "block";
 
     // animate popup -- GSAP
@@ -179,7 +179,7 @@ function showModal(hotspotData) {
 
     modal.style.display = "block";
     document.body.classList.add("modal-open"); // no scrolling
-        
+
     // get button to close modal
     const closeModalButton = document.querySelector("#close-modal");
     // event lstneer on close buton... both modal and overlay
@@ -198,7 +198,7 @@ function showModal(hotspotData) {
             }
         });
     });
-  }
+}
 
 
 // for updating/flktering
@@ -215,15 +215,15 @@ function clearMarkers(map) {
 function getMarkerColor(borough) {
     // each borough has a color... return it
     if (borough === 'Queens') {
-        return 'red'; 
+        return 'red';
     } else if (borough === 'Brooklyn') {
-        return 'green'; 
+        return 'green';
     } else if (borough === 'Manhattan') {
-        return 'blue'; 
+        return 'blue';
     } else if (borough === 'Bronx') {
         return 'yellow';
     } else if (borough === 'Staten Island') {
-        return 'purple'; 
+        return 'purple';
     } else {
         return 'gray'; // empty ones aka undefined
     }
@@ -263,7 +263,7 @@ async function mainEvent() {
         // event listener for search bar... using search button
         submit.addEventListener("click", (event) => {
             event.preventDefault();
-            const searchQuery = hotspotName.value.toLowerCase();   
+            const searchQuery = hotspotName.value.toLowerCase();
             const filteredHotspots = currentArray
                 .filter((item) => {
                     const providerName = item.provider ? item.provider.toLowerCase() : "";
@@ -298,7 +298,7 @@ async function mainEvent() {
             // console.log("Selected category: ", selectedCategory);
             filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, currentArray);
         });
-        
+
 
         // eveent listener for clear button resetse
         clearFilters.addEventListener("click", (event) => {
@@ -335,7 +335,7 @@ async function mainEvent() {
         window.addEventListener('resize', function () {
             const modal = document.querySelector('#modal');
             modal.style.transform = 'translate(-50%, -50%)';
-          });
+        });
 
     }
 }
