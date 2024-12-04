@@ -80,7 +80,7 @@ function initMap() {
 function markerPlace(hotspots, map) {
     // check for and remove existing markers on layer
     map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
+        if (layer instanceof L.CircleMarker) {
             layer.remove();
         }
     });
@@ -94,11 +94,24 @@ function markerPlace(hotspots, map) {
                 spot.location_lat_long.longitude,
                 spot.location_lat_long.latitude,
             ];
+
+            // get boroughs and then call function to get corresponding color
+            const borough = spot.boroname || ""; // empty ig no boroname
+            const color = getMarkerColor(borough); 
+
+            // markers... make with color
+            const circleMarker = L.circleMarker([lat, lon], {
+                color: color,       
+                radius: 8,           
+                weight: 3,          
+                fillOpacity: 0.7    
+            }).addTo(map);
+
             // console.log(`htspot coords: ${spot.ssid}, Lat: ${lat}, Lon: ${lon}`);
-            const marker = L.marker([lat, lon]).addTo(map); //.bindPopup(`<b>${spot.ssid}`);
+            // const marker = L.marker([lat, lon]).addTo(map); //.bindPopup(`<b>${spot.ssid}`);
 
             // add an event listener (if click marker, show modal)
-            marker.addEventListener("click", (event) => {
+            circleMarker.addEventListener("click", (event) => {
                 console.log("showing modal");
                 showModal(spot);
             });
@@ -108,12 +121,19 @@ function markerPlace(hotspots, map) {
 
 // fetch data and call func to place markers on map
 async function loadHotspotData(url) {
-    //   const map = initMap(); // initialize
-    const response = await fetch(url); // fetch... use peomise!!!!!!!!!!!!!!!!!
-    const hotspots = await response.json(); // convertt to json
+    // const response = await fetch(url); // fetch... use peomise!!!!!!!!!!!!!!!!!
+    // const hotspots = await response.json(); // convertt to json
 
-    markerPlace(hotspots, map); //  put markers on map
-    return hotspots;
+    // markerPlace(hotspots, map); //  put markers on map
+    // return hotspots;
+    try {
+        // Instead of fetch, use the promisified function promiseData
+        const hotspots = await promiseData(url); 
+        markerPlace(hotspots, map); // put markers on map
+        return hotspots;
+    } catch (err) {
+        console.error("Error loading hotspots data:", err);
+    }
 }
 
 function injectHTML(list) {
@@ -184,11 +204,32 @@ function showModal(hotspotData) {
 // for updating/flktering
 function clearMarkers(map) {
     map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
+        if (layer instanceof L.CircleMarker) {
             map.removeLayer(layer);
         }
     });
 }
+
+
+// colors for markers
+function getMarkerColor(borough) {
+    // each borough has a color... return it
+    if (borough === 'Queens') {
+        return 'red'; 
+    } else if (borough === 'Brooklyn') {
+        return 'green'; 
+    } else if (borough === 'Manhattan') {
+        return 'blue'; 
+    } else if (borough === 'Bronx') {
+        return 'yellow';
+    } else if (borough === 'Staten Island') {
+        return 'purple'; 
+    } else {
+        return 'gray'; // empty ones aka undefined
+    }
+}
+
+
 
 // main func
 async function mainEvent() {
@@ -290,6 +331,11 @@ async function mainEvent() {
 
         // event listenre for outputs (like the map mparkers)
         attachOutputListeners(currentArray);
+
+        window.addEventListener('resize', function () {
+            const modal = document.querySelector('#modal');
+            modal.style.transform = 'translate(-50%, -50%)';
+          });
 
     }
 }

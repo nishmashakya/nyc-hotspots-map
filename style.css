@@ -267,10 +267,12 @@ h2 {
     background: var(--color-white);
     padding: 20px 50px 20px 50px;
     width: 90%;
-    height: 80%;
+    height: auto;
+    max-height: 90%;
     display: none;
     color: var(--color-black);
-    z-index: 1000; /*bc otherwise the map will be on top of the modal :( */
+    z-index: 1000; 
+    /*bc otherwise the map will be on top of the modal :( */
   }
 
   #modal h3 { 
@@ -307,8 +309,6 @@ h2 {
   }
 
 
-
-
   /* and the overlay too */
   #overlay {
     position: fixed;
@@ -328,6 +328,47 @@ h2 {
 
 /* MEDIA QUERY (MOBILE) */
 
-@media only screen and (max-width: 736px) {
+@media only screen and (max-width: 750px) {
   
+  .header {
+    line-height: 2.0;
+  }
+  .header h1 span {
+    padding: 0px;
+  }
+
+  .top-right {
+    padding: 100px 40px 50px 40px;
+  }
+
+  #button-to-data, #button-to-bottom {
+    padding: 20px;
+  }
+
+  .filters-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  /*so that the output boxes at bottom atack vertically 1 column*/
+  .output {
+    width: 90%;
+  }
+
+  /*adjust the modal popup!!!*/
+
+ 
+  #modal-divide {
+    flex-direction: column;
+  }
+
+  #modal-divide #modal-left,
+  #modal-divide #modal-right {
+    width: 100%;
+  }
+
+  #modal-divide img {
+    width: 100%;
+  }
 }
