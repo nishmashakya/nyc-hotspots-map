@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 :root {
   --color-white: rgb(255, 255, 255);
   --color-black: rgb(0, 0, 0);
   --color-red: rgb(214, 0, 0);
+  --font-display: "Archivo Black", sans-serif;
+  --font-text: "Figtree", serif;
 }
 
 * {
@@ -24,32 +27,39 @@ html {
 body {
   /* background-color: var(--color-black); */
   /* color: var(--color-white); */
-  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
 }
 
-header {
-  color: var(--color-black);
-  padding: 20px;
-  height: 70vh;
+p, button, label {
+  font-family: var(--font-text);
+  font-size: 14pt;
 }
+
 
 .header {
-  padding: 50px;
+  color: var(--color-black);
+  font-family: var(--font-display);
+  font-size: 2em;
+  padding-top: 0;
+  margin-bottom: 10px;
   text-align: center;
   position: relative;
-  top: 70%;
-  transform: translateY(-50%);
-  /* horizontally center the text */
 }
 
 
-.header h1 span {
-  padding: 20px;
-  background-color: #ffffffbc;
+h2 {
+  font-family: var(--font-display);
+  font-size: 22pt;
+  font-weight: 900;
 }
 
+
+h3 {
+  font-family: var(--font-text);
+  font-size: 18pt;
+  font-weight: 700;
+}
 
 footer {
   padding: 5px;
@@ -66,6 +76,8 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   height: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 
@@ -73,25 +85,34 @@ footer {
 .top-right {
   width: 50%;
   height: 100vh;
+  margin: 0;
 }
 
 
 .top-left {
+  position: relative;
   background-image: url('nyc.jpg');
   background-position: center -50px;
+  height: auto;
 }
 
 .top-right {
-  padding: 100px 90px 50px 90px;
+  padding: 30px 60px 30px 60px;
   text-align: center;
   background-color: var(--color-white);
-  /* background-color: #fde5c3; */
   color: var(--color-black);
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  height: 100vh; 
+    overflow-y: auto;
 }
 
+
+
+/* buttons for view dataset and map */
 .buttons {
   display: flex;
   flex-direction: column;
@@ -100,11 +121,7 @@ footer {
   margin: 50px 0;
 }
 
-/* #button-to-bottom, #button-to-data {
-  padding: 30px;
-  width: 30em;
-  margin-bottom: 100px;
-} */
+
 
 
 .content {
@@ -241,6 +258,8 @@ h2 {
   height: 75vh;
   width: 100%;
   margin-bottom: 1rem;
+  border: 2px solid var(--color-white);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -280,6 +299,8 @@ h2 {
   color: var(--color-black);
   z-index: 1000;
   /*bc otherwise the map will be on top of the modal :( */
+  border-radius: 5px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 #modal h3 {
@@ -346,10 +367,12 @@ body.modal-open {
 
   .header h1 span {
     padding: 0px;
+    background-color: transparent;
+    box-shadow: none;
   }
 
   .top-right {
-    padding: 100px 40px 50px 40px;
+      font-size: 0.6em;
   }
 
   #button-to-data,

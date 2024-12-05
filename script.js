@@ -1,3 +1,5 @@
+// defining all variables
+
 const apiUrlMap =
     "https://data.cityofnewyork.us/resource/yjub-udmw.json?$query=SELECT%20objectid%2C%20borough%2C%20boroname%2C%20type%2C%20provider%2C%20name%2C%20location%2C%20latitude%2C%20longitude%2C%20x%2C%20y%2C%20location_t%2C%20location_lat_long%2C%20remarks%2C%20city%2C%20ssid%2C%20sourceid%2C%20activated%2C%20borocode%2C%20ntacode%2C%20ntaname%2C%20coundist%2C%20zip%2C%20borocd%2C%20ct2010%2C%20bctcb2010%2C%20bin%2C%20bbl%2C%20doitt_id";
 
@@ -69,7 +71,7 @@ async function promiseData(url) {
     });
 }
 
-// initialize map
+// initialize map -- leaflet documdentation
 function initMap() {
     const map = L.map("map").setView([40.73, -73.9], 12); // center
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -124,19 +126,14 @@ function markerPlace(hotspots, map) {
 
 // fetch data and call func to place markers on map
 async function loadHotspotData(url) {
-    // const response = await fetch(url); // fetch... use peomise!!!!!!!!!!!!!!!!!
-    // const hotspots = await response.json(); // convertt to json
-
-    // markerPlace(hotspots, map); //  put markers on map
-    // return hotspots;
     try {
         map = initMap();
-        // Instead of fetch, use the promisified function promiseData
+        // promisfied
         const hotspots = await promiseData(url);
         markerPlace(hotspots, map); // put markers on map
         return hotspots;
     } catch (err) {
-        console.error("Error loading hotspots data:", err);
+        console.error("Error loading data:", err);
     }
 }
 
@@ -147,7 +144,7 @@ function injectHTML(list) {
     const target = document.querySelector("#results_box");
     // map is doing same as like foreach iterating through list... just at once (i found this is better time performance)
     const html = list.map((item) =>
-        `<div class="output"><h3>PROVIDER: ${item.provider}</h3>ZIP: ${item.zip}</div></br>`
+        `<div class="output"><h3>PROVIDER: ${item.provider}</h3><p>ZIP: ${item.zip}</p></div></br>`
     ).join("");
     target.innerHTML = html;
 
@@ -348,19 +345,19 @@ async function mainEvent() {
 
         dropdownBorough.addEventListener("change", (event) => {
             selectedBorough = event.target.value;
-            // console.log("Selected category: ", selectedCategory);
+            // console.log("selected category: ", selectedCategory);
             filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, currentArray);
         });
 
         dropdownAccess.addEventListener("change", (event) => {
             selectedAccess = event.target.value;
-            // console.log("Selected category: ", selectedCategory);
+            // console.log("selected category: ", selectedCategory);
             filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, currentArray);
         });
 
         dropdownLocation.addEventListener("change", (event) => {
             selectedLocation = event.target.value;
-            // console.log("Selected category: ", selectedCategory);
+            // console.log("selected category: ", selectedCategory);
             filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, currentArray);
         });
 
