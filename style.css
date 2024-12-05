@@ -40,7 +40,7 @@ p, button, label {
 .header {
   color: var(--color-black);
   font-family: var(--font-display);
-  font-size: 2em;
+  font-size: 1em;
   padding-top: 0;
   margin-bottom: 10px;
   text-align: center;
@@ -104,10 +104,10 @@ footer {
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 
   height: 100vh; 
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 
@@ -248,7 +248,7 @@ h2 {
 .output:hover,
 #button-to-data:hover,
 #button-to-bottom:hover {
-  background-color: #eaeaea;
+  background-color: #ffd07e;
 }
 
 
