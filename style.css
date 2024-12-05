@@ -236,8 +236,6 @@ h2 {
 
 
 
-
-
 #map {
   display: block;
   height: 75vh;
@@ -336,6 +334,7 @@ h2 {
 body.modal-open {
   overflow: hidden;
 }
+
 
 /* MEDIA QUERY (MOBILE) */
 

@@ -22,6 +22,9 @@ const viewDatasetButton = document.querySelector("#button-to-data");
 const viewMapButton = document.querySelector("#button-to-bottom");
 
 
+const loader = document.querySelector('.loader');
+
+
 // function to filter markers - take in the mpa, the current selected options, and the data array (hotspots)
 function filterMarkers(selectedBorough, selectedAccess, selectedLocation, map, hotspots) {
     // console.log("Filtering markers for borough: ", selection);
@@ -137,17 +140,23 @@ async function loadHotspotData(url) {
     }
 }
 
+
+
+
 function injectHTML(list) {
     const target = document.querySelector("#results_box");
-    target.innerHTML = "";
-    list.forEach((item) => {
-        const str = `<div class="output"><h3>PROVIDER: ${item.provider}</h3>ZIP: ${item.zip}</div></br>`;
-        target.innerHTML += str;
-    });
+    // map is doing same as like foreach iterating through list... just at once (i found this is better time performance)
+    const html = list.map((item) =>
+        `<div class="output"><h3>PROVIDER: ${item.provider}</h3>ZIP: ${item.zip}</div></br>`
+    ).join("");
+    target.innerHTML = html;
 
-    // add listeners
-    attachOutputListeners(list);
+    attachOutputListeners(list); // adding listeners to the results (for popp)
 }
+
+
+
+
 
 // FOR THE POP UP BOX
 function showModal(hotspotData) {
@@ -288,6 +297,8 @@ function attachOutputListeners(list) {
     });
 }
 
+
+
 // main func
 async function mainEvent() {
     // map = initMap();
@@ -295,9 +306,6 @@ async function mainEvent() {
     const arrayJSON = await loadHotspotData(apiUrlMap);
 
     if (arrayJSON.length > 0) {
-        // hide the load animation
-        loadAnimation.classList.remove("lds-ellipsis");
-        loadAnimation.classList.add("lds-ellipsis_hidden");
 
         // filter
         let currentArray = arrayJSON;
@@ -393,6 +401,9 @@ async function mainEvent() {
             const modal = document.querySelector('#modal');
             modal.style.transform = 'translate(-50%, -50%)';
         });
+
+        
+        
 
     }
 }
